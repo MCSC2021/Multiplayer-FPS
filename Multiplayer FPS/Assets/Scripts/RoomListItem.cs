@@ -8,7 +8,8 @@ public class RoomListItem : MonoBehaviour
 {
 
     [SerializeField] TMP_Text text;
-    RoomInfo info;
+    //make it can be access from Launcher.cs
+    public RoomInfo info;
 
     public void SetUp(RoomInfo _info)
     {
