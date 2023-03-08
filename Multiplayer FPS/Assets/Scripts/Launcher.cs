@@ -120,6 +120,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
         foreach(RoomInfo updatedRoom in roomList)
         {
+            Debug.Log("Update is call in fullRoomList");
             RoomInfo existingRoom = fullRoomList.Find(x => x.Name.Equals(updatedRoom.Name)); // Check to see if we have that room already
             if(existingRoom == null) // WE DO NOT HAVE IT
             {
