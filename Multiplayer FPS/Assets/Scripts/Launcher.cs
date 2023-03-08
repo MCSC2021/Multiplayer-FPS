@@ -10,6 +10,8 @@ public class Launcher : MonoBehaviourPunCallbacks
 {
 
     public static Launcher Instance;
+    List<RoomInfo> fullRoomList = new List<RoomInfo>();
+    private List<RoomListItem> _roomListItems = new List<RoomListItem>();
 
     [SerializeField] TMP_InputField roomNameInputField;
     [SerializeField] TMP_Text errorText;
@@ -113,9 +115,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     {
         MenuManager.Instance.OpenMenu("title");
     }
-    /*
-    List<RoomInfo> fullRoomList = new List<RoomInfo>();
-    List<RoomListItem> roomListItems = new List<RoomListItem>();
+    
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
         foreach(RoomInfo updatedRoom in roomList)
@@ -127,6 +127,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             }
             else if(updatedRoom.RemovedFromList) // WE DO HAVE IT, so check if it has been removed
             {
+                Debug.Log("Room removed in fullRoomList");
                 fullRoomList.Remove(existingRoom); // Remove it from our full room list
             }
         }
@@ -139,20 +140,20 @@ public class Launcher : MonoBehaviourPunCallbacks
         foreach(RoomInfo roomInfo in fullRoomList)
         {
             RoomListItem roomListItem = Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>();
-            roomListItem.AssignRoom(roomInfo);
-            roomListItems.Add(roomListItem);
+            roomListItem.SetUp(roomInfo);
+            _roomListItems.Add(roomListItem);
         }
     }
 
     void RemoveRoomList()
     {
-        foreach(RoomListItem roomListItem in roomListItems)
+        foreach(RoomListItem roomListItem in _roomListItems)
         {
             Destroy(roomListItem.gameObject);
         }
-        roomListItems.Clear();
+        _roomListItems.Clear();
     }
-    */
+    /*
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         foreach(Transform trans in roomListContent)
@@ -174,7 +175,7 @@ public class Launcher : MonoBehaviourPunCallbacks
             Instantiate(roomListItemPrefab, roomListContent).GetComponent<RoomListItem>().SetUp(roomList[i]);
         }
     }
-
+    */
     public override void OnPlayerEnteredRoom(Player newPlayer)
     {
         Instantiate(PlayerListItemPrefab, PlayerListContent).GetComponent<PlayerListItem>().SetUp(newPlayer);
