@@ -12,6 +12,7 @@ public class Launcher : MonoBehaviourPunCallbacks
     public static Launcher Instance;
     List<RoomInfo> fullRoomList = new List<RoomInfo>();
     private List<RoomListItem> _roomListItems = new List<RoomListItem>();
+    private bool IsnotHost = true;
 
     [SerializeField] TMP_InputField roomNameInputField;
     [SerializeField] TMP_Text errorText;
@@ -54,6 +55,8 @@ public class Launcher : MonoBehaviourPunCallbacks
         {
             return;
         }
+        IsnotHost = false;
+        Debug.Log("IsnotHost2 = " + IsnotHost);
         PhotonNetwork.CreateRoom(roomNameInputField.text);
         MenuManager.Instance.OpenMenu("loading");
     }
@@ -120,9 +123,10 @@ public class Launcher : MonoBehaviourPunCallbacks
     public override void OnRoomListUpdate(List<RoomInfo> roomList) {
         foreach(RoomInfo updatedRoom in roomList)
         {
-            Debug.Log("Update is call in fullRoomList");
+            
             RoomInfo existingRoom = fullRoomList.Find(x => x.Name.Equals(updatedRoom.Name)); // Check to see if we have that room already
-            if(existingRoom == null) // WE DO NOT HAVE IT
+            Debug.Log("IsnotHost = "+ IsnotHost);
+            if (existingRoom == null && IsnotHost) // WE DO NOT HAVE IT and NOT ghost ROOM
             {
                 fullRoomList.Add(updatedRoom); // Add the room to the full room list
             }
@@ -131,8 +135,11 @@ public class Launcher : MonoBehaviourPunCallbacks
                 Debug.Log("Room removed in fullRoomList");
                 fullRoomList.Remove(existingRoom); // Remove it from our full room list
             }
+            IsnotHost = true;
+            Debug.Log("Reset");
         }
         RenderRoomList();
+        Debug.Log("Render " + IsnotHost);
     }
 
     void RenderRoomList()
