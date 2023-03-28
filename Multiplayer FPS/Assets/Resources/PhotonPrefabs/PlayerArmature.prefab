@@ -150,8 +150,7 @@ Transform:
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
   m_LocalPosition: {x: -0.029, y: 0.005, z: 0.033}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 2901771964289067092}
+  m_Children: []
   m_Father: {fileID: 4334802242594635747}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -788,6 +787,7 @@ GameObject:
   - component: {fileID: 3132674736532434129}
   - component: {fileID: 2738412188207254860}
   - component: {fileID: 5685997432286079351}
+  - component: {fileID: 3617717984941425249}
   m_Layer: 8
   m_Name: PlayerArmature
   m_TagString: Player
@@ -806,7 +806,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 7318178036303451534}
+  - {fileID: 2901771964289067092}
   - {fileID: 8734921254254408378}
   - {fileID: 1584334777516181745}
   m_Father: {fileID: 0}
@@ -906,7 +906,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AnimeBlendSpeed: 8.9
-  cameraHolder: {fileID: 423398033517538321}
+  CameraRoot: {fileID: 423398033517538334}
+  Camera: {fileID: 2901771964289067092}
+  UpperLimit: -40
+  bottomLimit: 70
+  MouseSensitivity: 60
 --- !u!114 &3132674736532434129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -940,6 +944,7 @@ MonoBehaviour:
   observableSearch: 2
   ObservedComponents:
   - {fileID: 5685997432286079351}
+  - {fileID: 3617717984941425249}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -959,6 +964,33 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 1
+--- !u!114 &3617717984941425249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3132674736532434130}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b8c4a61274f60b4ea5fb4299cfdbf14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowLayerWeightsInspector: 1
+  ShowParameterInspector: 1
+  m_SynchronizeParameters:
+  - Type: 1
+    SynchronizeType: 2
+    Name: Blend
+  - Type: 1
+    SynchronizeType: 2
+    Name: X_velocity
+  - Type: 1
+    SynchronizeType: 2
+    Name: Y_velocity
+  m_SynchronizeLayers:
+  - SynchronizeType: 0
+    LayerIndex: 0
 --- !u!1 &3227640575101136559
 GameObject:
   m_ObjectHideFlags: 0
@@ -1357,11 +1389,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5083705601454431064}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.00030325353, y: 1.6633162, z: 0.101173}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 423398033517538334}
+  m_Father: {fileID: 2320109996570539624}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1122716015585078005
@@ -1849,36 +1881,6 @@ Transform:
   - {fileID: 3070314132500825687}
   - {fileID: 1700004869927714669}
   m_Father: {fileID: 7299203087391543424}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &7318178036303451529
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 7318178036303451534}
-  m_Layer: 0
-  m_Name: PlayerCameraRoot
-  m_TagString: CinemachineTarget
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &7318178036303451534
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7318178036303451529}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.375, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2320109996570539624}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7342041491853625973

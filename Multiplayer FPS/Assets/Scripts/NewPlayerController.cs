@@ -11,13 +11,18 @@ namespace AnimeCharacter.PlayerControl
     public class NewPlayerController : MonoBehaviourPunCallbacks
     {
         [SerializeField] private float AnimeBlendSpeed = 8.9f;
-        [SerializeField] GameObject cameraHolder;
+        [SerializeField] private Transform CameraRoot;
+        [SerializeField] private Transform Camera;
+        [SerializeField] private float UpperLimit = -40f;
+        [SerializeField] private float bottomLimit = 70f;
+        [SerializeField] private float MouseSensitivity = 1f;
         private Rigidbody _PlayerRigidbody;
         private InputManager _inputManager;
         private Animator _animator;
         private bool _hasAnimator;
         private int _xVelHash;
         private int _yVelHash;
+        private float _xRotation;
 
         private const float _walkSpeed = 3f;
         private const float _runSpeed = 6f;
@@ -60,6 +65,13 @@ namespace AnimeCharacter.PlayerControl
             Move();
         }
 
+        private void LateUpdate()
+        {
+            if (!PV.IsMine)
+                return;
+            CamMovement();
+        }
+
         private void Move()
         {
             if (!_hasAnimator) return;
@@ -78,6 +90,20 @@ namespace AnimeCharacter.PlayerControl
             _animator.SetFloat(_xVelHash, _currentVelocity.x);
             _animator.SetFloat(_yVelHash, _currentVelocity.y);
 
+        }
+
+        private void CamMovement()
+        {
+            if (!_hasAnimator) return;
+            var Mouse_X = _inputManager.Look.x;
+            var Mouse_Y = _inputManager.Look.y;
+            Camera.position = CameraRoot.position;
+
+            _xRotation -= Mouse_Y * MouseSensitivity * Time.deltaTime;
+            _xRotation = Mathf.Clamp(_xRotation, UpperLimit, bottomLimit);
+
+            Camera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
+            transform.Rotate(Vector3.up, Mouse_X * MouseSensitivity * Time.deltaTime);
         }
     }
 }
