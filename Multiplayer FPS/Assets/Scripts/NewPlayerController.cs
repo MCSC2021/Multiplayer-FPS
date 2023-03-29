@@ -24,8 +24,8 @@ namespace AnimeCharacter.PlayerControl
         private int _yVelHash;
         private float _xRotation;
 
-        private const float _walkSpeed = 3f;
-        private const float _runSpeed = 6f;
+        private const float _walkSpeed = 2f;
+        private const float _runSpeed = 4f;
         private Vector2 _currentVelocity;
 
         PhotonView PV;
@@ -77,7 +77,7 @@ namespace AnimeCharacter.PlayerControl
             if (!_hasAnimator) return;
 
             float targetSpeed = _inputManager.Run ? _runSpeed : _walkSpeed;
-            if (_inputManager.Move == Vector2.zero) targetSpeed = 0.1f;
+            if (_inputManager.Move == Vector2.zero) targetSpeed = 0f;
 
             _currentVelocity.x = Mathf.Lerp(_currentVelocity.x, targetSpeed * _inputManager.Move.x, AnimeBlendSpeed * Time.fixedDeltaTime);
             _currentVelocity.y = Mathf.Lerp(_currentVelocity.y, targetSpeed * _inputManager.Move.y, AnimeBlendSpeed * Time.fixedDeltaTime);
@@ -99,11 +99,12 @@ namespace AnimeCharacter.PlayerControl
             var Mouse_Y = _inputManager.Look.y;
             Camera.position = CameraRoot.position;
 
-            _xRotation -= Mouse_Y * MouseSensitivity * Time.deltaTime;
+            _xRotation -= Mouse_Y * MouseSensitivity * Time.smoothDeltaTime;
             _xRotation = Mathf.Clamp(_xRotation, UpperLimit, bottomLimit);
+            
 
             Camera.localRotation = Quaternion.Euler(_xRotation, 0, 0);
-            transform.Rotate(Vector3.up, Mouse_X * MouseSensitivity * Time.deltaTime);
+            _PlayerRigidbody.MoveRotation(_PlayerRigidbody.rotation * Quaternion.Euler(0, Mouse_X * MouseSensitivity * Time.smoothDeltaTime, 0));
         }
     }
 }
